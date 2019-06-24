@@ -1,0 +1,7 @@
+In this project you need to use Convolutional Neural Network (CNN) to classify MNIST Handwritten digits using Keras. 
+We also saved the model file obtained after training. In this part of the tutorial series, we are going to see how to deploy Keras model to production using Flask.
+Flask is part of the categories of the micro-framework. Micro-frameworks are normally framework with little to no dependencies to external libraries. 
+This means that the framework is light and there is little dependency to update and watch for security bugs. 
+
+
+

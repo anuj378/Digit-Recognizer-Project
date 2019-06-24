@@ -1,0 +1,16 @@
+Medium Link of the reference project
+https://medium.com/coinmonks/handwritten-digit-prediction-using-convolutional-neural-networks-in-tensorflow-with-keras-and-live-5ebddf46dc8
+
+live example
+https://ashok.tanka.la/assets/examples/mnist/mnist.html
+
+Adding NavBar in hindi
+https://www.youtube.com/watch?v=pkIqgB3fH70
+
+
+envato Tuts CSS+HTML
+https://webdesign.tutsplus.com/series/learn-css-the-complete-guide--cms-1065
+
+
+HTML Crash Course For Absolute Beginners (DURATION: 1Hr)
+https://www.youtube.com/watch?v=UB1O30fR-EE

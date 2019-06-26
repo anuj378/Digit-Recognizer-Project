@@ -4,60 +4,77 @@
 {% block body %}
 <style type="text/css">
 	.buttons_under_canvas1 {
-		margin-left: 35px;
+		margin-left: 105px;
 		margin-top: 10px;
 	}
+    .canvas1{
+    	margin-left:75px;
 
+    }
 	.canvas2 {
-		margin-left: 200px;
+		margin-left: 150px;
 		
 	}
 
 </style>
+
+
 <body onload="init();">
-    <br><br><br>
+    <br><br><br><br>
  	<div class="jumbotron text-center">
  		<h3>Welcome to Digit Recognizer</h3>
  		<br>This page lets you draw any digit (0-9) and predicts what you might have entered. Draw a digit in the left box and click on <b>"PREDICT"</b>.
  	</div>
  	        <div class="container">
 	 		<div class="row">
-	 			<div class="col-md-3">
-	 				<canvas  id="myCanvas" width="250" height="250" style="border:10px solid grey;">
+
+
+	 			<div class="col-md-3 canvas1">
+				
+	 					<canvas  id="myCanvas" width="250" height="250" name="image_data" style="border:10px solid black;">
 
 			Your browser does not support the HTML5 canvas tag.
-			</canvas>
-		
+						</canvas>
+						
+			      		
+     
 	 			</div>
              
+
              	<div class="col-md-3 canvas2">
-	 				<canvas  id="myCanvas2" width="500" height="250" style="border:3px solid black;">
+	 				<canvas  id="myCanvas2" width="500" height="250" style="border:3px dotted black;">
 
 			      Your browser does not support the HTML5 canvas tag.
-			</canvas>
+					</canvas>
 		
 	 			</div>
 
 	 		</div>
+
 	 		<div class="row buttons_under_canvas1">
+
 	 			
 	 			<div class="col-md-1 ">
 	 				<form action="/">
-			      	<input type="submit" class="btn btn-info" value = "CLEAR">
+			      	<input type="submit" class="btn btn-danger" value = "CLEAR">
+			      	
                    </form>
 
-	
+				
 	 			</div>	
 	 			<div class="col-md-1">
-	 							<button type="button"    class="btn btn-success">PREDICT</button>
+	 				
+	 							<button id="predBtn"onclick="postImage();" class="btn btn-success">PREDICT</button>
 
 	 			</div>
 	 		</div>
 	 		
 			      
 			</div>
-
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.2"> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+
 var lastX,lastY;
 lastX=-1;
 lastY=-1;
@@ -109,18 +126,6 @@ function drawLine( x, y, size) {
 
  }
 
-
-  
-function saveImage()
- {
- 	var canvas = document.getElementById("myCanvas");
-// draw to canvas...
-canvas.toBlob(function(blob) {
-    saveAs(blob, "pokemon.png");
-});
-console.log("IMAGE SAVED!");
- }
-
    function mouseMove(e) {
            
             getCurrent(e);
@@ -149,6 +154,34 @@ if (ctx) {
 
 }
 
+function postImage()
+{
+
+	               		var image_b64=canvas.toDataURL("image/png");
+                        canvas2=document.getElementById("myCanvas2");
+                        ctx2=canvas2.getContext("2d");
+           
+                        /*document.getElementById('inp_img').value = x;
+                        var form_data=new FormData($('#form')[0])
+		            	*/
+		            	$.ajax({
+		            	url: '/predict',//'Flask.url_for('my_function')'
+		            	type: 'POST',
+		            	data: {'value' : image_b64}	
+		            			}).done(function(data,textStatus,jqXHR)
+		            								{
+		            									ctx2.font="40px Georgia"
+		            									ctx2.stroke()
+		            									//ctx2.
+		            									ctx2.fillText(data,75,100);	
+													}).fail(function (data)
+														{
+															console.log("FAILED!")
+														});	
+            		
+
+}
+
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 ctx.fillStyle = "white";
@@ -157,6 +190,55 @@ ctx.fillRect(0,0,250,250);
 
 
 
+/* $(function()
+          { 
+           
+           //convert to tensor 
+            	
+            	$('#predBtn').click(function()
+            		{
+            			event.preventDefault();
+            			//const imageData = ctx.getImageData(0, 0, 250, 250);
+		            	//console.log("imageData:",imageData)
+		            	/*
+		            	var tfImg = tf.fromPixels(imageData, 1);
+			            console.log("tfImg:",tfImg)
+			            var smallImg = tf.image.resizeBilinear(tfImg, [28, 28]);
+			            console.log("smalImg:",smalImg)
+			            smallImg = tf.cast(smallImg, 'float32');
+			            console.log("smalImg ARRAY:",smalImg);
+			            var tensor = smalImg.expandDims(0);
+                        tensor = tensor.div(tf.scalar(255));*
+
+                        //console.log(tensor)
+                        var x=canvas.toDataUrl("image/png");
+                        console.log(x)
+                        var i=0;
+                        canvas2=document.getElementById("canvas2");
+
+                        ctx2=canvas2.getContext("2d");
+                        document.getElementById('inp_img').value = x;
+                        var form_data=new FormData($('#form')[0])
+		            	
+		            	$.ajax({
+		            	url: '/predict',//'Flask.url_for('my_function')'
+		            	type: 'POST',
+		            	data: {'value' : x}						}).done(function(data,textStatus,jqXHR){
+
+
+							console.log(data);
+						}).fail(function (data)
+						{
+							console.log("FAILED!")
+						});	
+            		});
+                
+                 
+             });
+            
+
+
+*/
 
 
 
